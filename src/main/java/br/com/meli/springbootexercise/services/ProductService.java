@@ -30,7 +30,15 @@ public class ProductService {
     }
 
     public String getProductById(Long id){
-        Product product = productRepository.getReferenceById(id);
+        Product product = new Product();
+        try {
+            product = productRepository.getReferenceById(id);
+
+            product.getName();
+        }
+        catch(EntityNotFoundException e){
+            return "Produto não encontrado!";
+        }
 
         return "\nNome do produto: " + product.getName() + "\nPreço do produto: " + product.getValue();
     }
@@ -46,7 +54,7 @@ public class ProductService {
                 productRepository.save(product);
             }
         } catch(EntityNotFoundException e){
-            return "Usuário não encontrado!";
+            return "Produto não encontrado!";
         }
 
         return "Atualizado!";
